@@ -1,0 +1,11 @@
+{
+  "commonConfig": {
+    "workerPoolSize": 40,
+    "workerMaxExecuteTime": 5,
+    "blockThreadCheckInterval": 1000
+  },
+  "restfulConfig": {
+    "host": "localhost",
+    "port": 9200
+  }
+}

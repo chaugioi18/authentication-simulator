@@ -1,0 +1,20 @@
+{
+  "firstDatabase": {
+    "dataSourceClassName": "com.mysql.jdbc.jdbc2.optional.MysqlDataSource",
+    "host": "localhost",
+    "port": 9910,
+    "maxPoolSize": 16,
+    "username": "root",
+    "password": "1@3Pikachu",
+    "database": "test"
+  },
+  "secondDatabase": {
+    "dataSourceClassName": "com.mysql.jdbc.jdbc2.optional.MysqlDataSource",
+    "host": "localhost",
+    "port": 9911,
+    "maxPoolSize": 16,
+    "username": "root",
+    "password": "123pikachu",
+    "database": "test"
+  }
+}

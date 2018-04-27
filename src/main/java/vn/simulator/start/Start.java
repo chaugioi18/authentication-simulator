@@ -22,6 +22,5 @@ public class Start extends AbstractVerticle {
         gateway
                 .useRestful()
                 .start();
-
     }
 }

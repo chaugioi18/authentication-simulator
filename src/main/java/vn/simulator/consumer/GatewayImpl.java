@@ -36,12 +36,9 @@ public class GatewayImpl implements IGateway {
 
         //handle consumer
         restfulConsumer.initConsumer(router);
-
-        server.requestHandler(router::accept).listen();
-
         if (server != null) {
             LOGGER.info("Start restful gateway router");
-            server.listen(event -> {
+            server.requestHandler(router::accept).listen(event -> {
                 if (event.succeeded()) {
                     LOGGER.info("Http server listen on port {}", config.getRestfulConfig().getPort());
                 } else {

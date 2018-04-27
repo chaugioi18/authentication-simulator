@@ -14,8 +14,8 @@ public class RestfulConsumer implements IRestfulConsumer {
     private IAuthenticationHandler handler;
 
     @Inject
-    RestfulConsumer() {
-
+    RestfulConsumer(IAuthenticationHandler handler) {
+        this.handler = handler;
     }
 
     @Override
@@ -27,7 +27,7 @@ public class RestfulConsumer implements IRestfulConsumer {
     }
 
     private RestfulConsumer handleAuthenticationApi(Router router) {
-        router.post("").handler(BodyHandler.create()).blockingHandler(handler::loginHandler);
+        router.post("/login").handler(BodyHandler.create()).blockingHandler(handler::loginHandler);
         return this;
     }
 

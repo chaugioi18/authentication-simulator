@@ -1,7 +1,30 @@
 group 'authentication-simulator'
 version '1.0'
 
+buildscript {
+    repositories {
+        mavenCentral()
+        jcenter()
+    }
+    dependencies {
+        classpath 'com.github.jengelman.gradle.plugins:shadow:2.0.0'
+
+        classpath 'org.jooq:jooq:3.9.1'
+        classpath 'org.jooq:jooq-meta:3.9.1'
+        classpath 'org.jooq:jooq-codegen:3.9.1'
+        classpath 'mysql:mysql-connector-java:5.1.38'
+    }
+}
+
+task wrapper(type: Wrapper) {
+    gradleVersion = '4.0'
+    distributionUrl = "https://services.gradle.org/distributions/gradle-$gradleVersion-all.zip"
+}
+
 apply plugin: 'java'
+apply plugin: 'idea'
+apply plugin: 'com.github.johnrengelman.shadow'
+
 
 repositories {
     mavenCentral()
@@ -14,5 +37,26 @@ dependencies {
 
     compile 'org.apache.logging.log4j:log4j-slf4j-impl:2.8.2'
 
+    compile 'javax.mail:mail:1.4.7'
+
+    compile 'org.apache.logging.log4j:log4j-core:2.8.2'
+    compile 'org.springframework:spring-context:4.1.6.RELEASE'
+    compile 'org.springframework:spring-jdbc:4.1.6.RELEASE'
+    compile 'org.jooq:jooq:3.9.1'
+    compile 'org.jooq:jooq-codegen:3.9.1'
+    compile 'com.zaxxer:HikariCP:2.7.8'
+    compile 'mysql:mysql-connector-java:5.1.38'
+
     testCompile group: 'junit', name: 'junit', version: '4.12'
+}
+shadowJar {
+    classifier = null
+    version = version
+    manifest {
+        attributes 'Main-Class': 'io.vertx.core.Starter'
+        attributes 'Main-Verticle': 'vn.simulator.start.Start'
+    }
+    mergeServiceFiles {
+        include 'META-INF/services/io.vertx.core.spi.VerticleFactory'
+    }
 }

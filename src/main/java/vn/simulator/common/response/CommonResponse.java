@@ -1,6 +1,5 @@
 package vn.simulator.common.response;
 
-import exception.CustomException;
 import io.vertx.core.json.DecodeException;
 import io.vertx.core.json.EncodeException;
 import io.vertx.core.json.Json;
@@ -15,71 +14,63 @@ import vn.simulator.exception.CustomException;
 
 public class CommonResponse {
 
-    private String payload;
-    private String queue;
+    private Integer code;
+    private JsonObject object;
+    private String message;
 
     private CommonResponse(CommRequestBuilder builder) {
-        this.payload = builder.payload;
-        this.queue = builder.queue;
+        this.object = builder.object;
+        this.code = builder.code;
     }
 
-    public String getPayload() {
-        return payload;
+    public Integer getCode() {
+        return code;
     }
 
-    public String getQueue() {
-        return queue;
+    public JsonObject getObject() {
+        return object;
+    }
+
+    public String getMessage() {
+        return message;
     }
 
     /**
      * This builder build common request to send by mq in micro services;
      */
     public static class CommRequestBuilder {
-        private Integer event;
-        private String payload;
-        private String queue;
+        private Integer code;
+        private JsonObject object;
 
         /**
-         * @param event   Event Id of request
-         * @param payload POJO object will be convert to json
-         * @param queue   queue to send message
+         * @param code   Event Id of request
+         * @param object POJO object will be convert to json
          */
-        public CommRequestBuilder(Integer event, Object payload, String queue) {
+        public CommRequestBuilder(Integer code, Object object) {
             try {
-                this.event = event;
-                this.payload = new JsonObject(Json.encodePrettily(payload))
-                        .put("event", this.event)
-                        .encodePrettily();
-                this.queue = queue;
+                this.code = code;
+                this.object = new JsonObject(Json.encodePrettily(object));
             } catch (DecodeException | EncodeException e) {
-                throw new CustomException.("This is not a json object");
+                throw new CustomException.JsonException("This is not a json object");
             }
         }
 
         public CommRequestBuilder() {
-            this.event = -1;
-            this.payload = new JsonObject().encodePrettily();
-            this.queue = null;
+            this.code = CodeResponse.AuthenticationCode.INVALID_INPUT.getCode();
+            this.object = new JsonObject();
         }
 
-        public CommRequestBuilder setEvent(Integer event) {
-            this.event = event;
+        public CommRequestBuilder setCode(Integer code) {
+            this.code = code;
             return this;
         }
 
-        public CommRequestBuilder setPayload(Object payload) {
+        public CommRequestBuilder setObject(JsonObject object) {
             try {
-                this.payload = new JsonObject(Json.encodePrettily(payload))
-                        .put("event", this.event)
-                        .encodePrettily();
+                this.object = new JsonObject(Json.encodePrettily(object));
             } catch (DecodeException | EncodeException e) {
-                throw new CustomException("This is not a json object");
+                throw new CustomException.JsonException("This is not a json object");
             }
-            return this;
-        }
-
-        public CommRequestBuilder setQueue(String queue) {
-            this.queue = queue;
             return this;
         }
 

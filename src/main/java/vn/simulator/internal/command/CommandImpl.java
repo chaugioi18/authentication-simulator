@@ -1,11 +1,15 @@
 package vn.simulator.internal.command;
 
-import vn.simulator.common.response.CommonResponse;
+import com.google.inject.Inject;
+import vn.simulator.internal.services.ILoginService;
 
-public class CommandImpl implements ICommand {
+public abstract class CommandImpl {
 
-    @Override
-    public CommonResponse execute(Object data) {
-        return null;
+    protected ILoginService loginService;
+
+    @Inject
+    public CommandImpl setLoginService(ILoginService loginService) {
+        this.loginService = loginService;
+        return this;
     }
 }

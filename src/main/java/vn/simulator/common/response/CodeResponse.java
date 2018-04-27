@@ -7,7 +7,7 @@ public class CodeResponse implements ICodeResponse {
     }
 
     public static String getMessage(Integer filter) {
-        for (ICodeResponse t : SuccessCode.values()) {
+        for (ICodeResponse t : AuthenticationCode.values()) {
             if (t.getCode() == filter) {
                 return t.getMessage();
             }
@@ -20,45 +20,15 @@ public class CodeResponse implements ICodeResponse {
         return codeResponse.getMessage();
     }
 
-    public enum SuccessCode implements ICodeResponse {
-
-        SUCCESS(0, "Success");
-
-        private int code;
-        private String message;
-
-        SuccessCode(int code, String message) {
-            this.code = code;
-            this.message = message;
-        }
-
-        public static String getMessage(Integer filter) {
-            for (ICodeResponse t : values()) {
-                if (t.getCode() == filter) {
-                    return t.getMessage();
-                }
-            }
-            return null;
-        }
-
-        @Override
-        public int getCode() {
-            return code;
-        }
-
-        @Override
-        public String getMessage() {
-            return message;
-        }
-    }
-
-    public enum ClientErrorCode implements ICodeResponse {
-        PERMISSION_DENIED(10001, "Permission not allowed");
+    public enum AuthenticationCode implements ICodeResponse {
+        SUCCESS(0, "Success"),
+        PERMISSION_DENIED(10001, "Permission not allowed"),
+        INVALID_INPUT(10002, "Invalid input");
 
         private int code;
         private String message;
 
-        ClientErrorCode(int code, String message) {
+        AuthenticationCode(int code, String message) {
             this.code = code;
             this.message = message;
         }
@@ -129,7 +99,7 @@ public class CodeResponse implements ICodeResponse {
         private int code;
         private String message;
 
-        HttpStatusErrorCode(int code, String message) {
+        HttpStatusCode(int code, String message) {
             this.code = code;
             this.message = message;
         }

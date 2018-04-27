@@ -1,0 +1,6 @@
+{
+  "url": [
+    "build/resources/main/simulator-authen-common-conf.json",
+    "build/resources/main/simulator-database-conf.json"
+  ]
+}
